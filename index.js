@@ -1,13 +1,4 @@
-const prices = {
-  otcbtc: {
-    'CNY/BTC': 109500,
-    'CNY/ETH': 10216.8
-  },
-  binance: {
-    'BTC/ADA': 0.00005000,
-    'ETH/ADA': 0.00053580
-  }
-}
+const getRealtimePrice = require('./Models/getRealtimePrice')
 
 const tradingFees = { // rate
   otcbtc: {
@@ -60,27 +51,30 @@ function compute ({
 
 const formatter = num => num.toFixed(8)
 
-// example, buy ETH to buy ADA.
-console.log('ETH:', formatter(
-  compute({
-    money: 20000,
-    otcPrice: prices.otcbtc['CNY/ETH'],
-    coinCoinPrice: prices.binance['ETH/ADA'],
-    otcTxFee: tradingFees.otcbtc['CNY/ETH'],
-    otcWithdrawFee: withdrawFees.otcbtc.ETH,
-    coinCoinTxFee: tradingFees.binance['ETH/ADA'],
-    withdrawToWalletFee: withdrawFees.binance.ADA,
-  })
-))
+async function main () {
+  console.log('ETH:', formatter(
+    compute({
+      money: 20000,
+      otcPrice: await getRealtimePrice('OTCBTC', 'CNY', 'ETH'),
+      coinCoinPrice: await getRealtimePrice('Binance', 'ETH', 'ADA'),
+      otcTxFee: tradingFees.otcbtc['CNY/ETH'],
+      otcWithdrawFee: withdrawFees.otcbtc.ETH,
+      coinCoinTxFee: tradingFees.binance['ETH/ADA'],
+      withdrawToWalletFee: withdrawFees.binance.ADA,
+    })
+  ))
 
-console.log('BTC:', formatter(
-  compute({
-    money: 20000,
-    otcPrice: prices.otcbtc['CNY/BTC'],
-    coinCoinPrice: prices.binance['BTC/ADA'],
-    otcTxFee: tradingFees.otcbtc['CNY/BTC'],
-    otcWithdrawFee: withdrawFees.otcbtc.BTC,
-    coinCoinTxFee: tradingFees.binance['BTC/ADA'],
-    withdrawToWalletFee: withdrawFees.binance.ADA,
-  })
-))
+  console.log('BTC:', formatter(
+    compute({
+      money: 20000,
+      otcPrice: await getRealtimePrice('OTCBTC', 'CNY', 'BTC'),
+      coinCoinPrice: await getRealtimePrice('Binance', 'BTC', 'ADA'),
+      otcTxFee: tradingFees.otcbtc['CNY/BTC'],
+      otcWithdrawFee: withdrawFees.otcbtc.BTC,
+      coinCoinTxFee: tradingFees.binance['BTC/ADA'],
+      withdrawToWalletFee: withdrawFees.binance.ADA,
+    })
+  ))
+}
+
+main()

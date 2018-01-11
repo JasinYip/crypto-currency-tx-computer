@@ -1,0 +1,24 @@
+{
+  "name": "crypto-currency-tx-computer",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasinYip/crypto-currency-tx-computer.git"
+  },
+  "author": "Jasin Yip",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JasinYip/crypto-currency-tx-computer/issues"
+  },
+  "homepage": "https://github.com/JasinYip/crypto-currency-tx-computer#readme",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "lodash": "^4.17.4",
+    "nodespider": "^0.9.3"
+  }
+}
